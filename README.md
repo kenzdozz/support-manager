@@ -1,6 +1,8 @@
 # support-manager-api
 
 [![Build Status](https://travis-ci.org/kenzdozz/support-manager-api.svg?branch=master)](https://travis-ci.org/kenzdozz/support-manager-api)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b71d2e0d56905e195070/test_coverage)](https://codeclimate.com/github/kenzdozz/support-manager-api/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b71d2e0d56905e195070/maintainability)](https://codeclimate.com/github/kenzdozz/support-manager-api/maintainability)
 
 The system allows customers to be able to place support requests, and support agents to process the request.
 

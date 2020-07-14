@@ -5,7 +5,7 @@
   "author": "Kenneth Onah",
   "license": "MIT",
   "scripts": {
-    "test": "ENV_TEST=true MDB_DB=support_manager_test_db nyc mocha -r ts-node/register test/**/*.spec.ts --exit",
+    "test": "ENV_TEST=true MDB_DB=support_manager_test_db nyc --reporter=text-summary --reporter=lcov mocha -r ts-node/register test/**/*.spec.ts --exit",
     "build": "tsc",
     "start": "npm run build && node build/src/app",
     "start:dev": "ts-node src/app",
