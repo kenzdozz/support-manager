@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - 10.15.3
+
+env:
+  - ENV=travis
+
+services:
+  - mongodb
+
+cache:
+  directories:
+    - node_modules
+
+script:
+  - "yarn test"

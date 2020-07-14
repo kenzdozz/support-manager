@@ -1,0 +1,2053 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Support Manager",
+    "description": "\nThe system allows customers to be able to place support requests, and support agents to process the request.\n\n## Features\n\n- Customers can create account.\n- Customers can log in.\n- Customers can create support request.\n- Customers can view his/her support requests.\n- Customers can comment on support request when an agent has commented.\n- Agent can view all support requests.\n- Agent can comment on support request.\n- Agent can close a support request.\n- Agent can export support requests.\n- Admin can create a user account: [agent, customer, admin].\n- Admin can view all support requests.\n- Admin can comment on support request.\n- Admin can close a support request.\n- Admin can export support requests.\n- Admin can delete a support requests.\n- Admin can delete a user account.\n\n## API\n\n- BASE_URL: `http://localhost:9090/api/v1`\n\n",
+    "contact": {}
+  },
+  "host": "http://localhost:9090",
+  "basePath": "/api/v1",
+  "securityDefinitions": {},
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "description": "This lets a customer sign up to the application, the following fields are required: firstName, lastName, email, password.",
+        "summary": "Signup",
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "Signup",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SignupRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Signup-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 201,
+                "data": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsIl9pZCI6IjVmMGMyYzgyYmFlM2ZmZTZjMmY4Mjk5ZiIsImxhc3ROYW1lIjoiS2VuIiwiZmlyc3ROYW1lIjoiS2VuIiwiZW1haWwiOiJLZW5AYW9sLmNvbSIsImlhdCI6MTU5NDYzMzM0NiwiZXhwIjoxNTk0NzE5NzQ2fQ.C37f0Utb-mkYLCfFllYDShUm_58sYMEoWOVszYWTxj8",
+                  "user": {
+                    "role": "user",
+                    "_id": "5f0c2c82bae3ffe6c2f8299f",
+                    "lastName": "Ken",
+                    "firstName": "Ken",
+                    "email": "Ken@aol.com"
+                  }
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Set-Cookie": {
+                "type": "string",
+                "default": "Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsIl9pZCI6IjVmMGMyYzgyYmFlM2ZmZTZjMmY4Mjk5ZiIsImxhc3ROYW1lIjoiS2VuIiwiZmlyc3ROYW1lIjoiS2VuIiwiZW1haWwiOiJLZW5AYW9sLmNvbSIsImlhdCI6MTU5NDYzMzM0NiwiZXhwIjoxNTk0NzE5NzQ2fQ.C37f0Utb-mkYLCfFllYDShUm_58sYMEoWOVszYWTxj8; Max-Age=900; Path=/; Expires=Mon, 13 Jul 2020 09:57:26 GMT; HttpOnly"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "414"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"19e-wufdMIEtzJoIZzuEwelfpb4kZm4\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 09:42:26 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Signup-Validationerror"
+            },
+            "examples": {
+              "application/json": {
+                "status": 409,
+                "error": "Validation errors.",
+                "fields": {
+                  "email": "Email already exists."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "This lets a customer login to the application, the following fields are required: email, password.",
+        "summary": "Login",
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "Login",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Login-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 200,
+                "data": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsIl9pZCI6IjVmMGMyYzgyYmFlM2ZmZTZjMmY4Mjk5ZiIsImxhc3ROYW1lIjoiS2VuIiwiZmlyc3ROYW1lIjoiS2VuIiwiZW1haWwiOiJLZW5AYW9sLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMTNUMDk6NDI6MjYuNzg5WiIsInVwZGF0ZWRBdCI6IjIwMjAtMDctMTNUMDk6NDI6MjYuNzg5WiIsIl9fdiI6MCwiaWF0IjoxNTk0NjMzNTczLCJleHAiOjE1OTQ3MTk5NzN9.veMowOMdhc2crbFBXe11yTZuw-oFSHSNuRJpzfB8smo",
+                  "user": {
+                    "role": "user",
+                    "_id": "5f0c2c82bae3ffe6c2f8299f",
+                    "lastName": "Ken",
+                    "firstName": "Ken",
+                    "email": "Ken@aol.com",
+                    "createdAt": "2020-07-13T09:42:26.789Z",
+                    "updatedAt": "2020-07-13T09:42:26.789Z",
+                    "__v": 0
+                  }
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Set-Cookie": {
+                "type": "string",
+                "default": "Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsIl9pZCI6IjVmMGMyYzgyYmFlM2ZmZTZjMmY4Mjk5ZiIsImxhc3ROYW1lIjoiS2VuIiwiZmlyc3ROYW1lIjoiS2VuIiwiZW1haWwiOiJLZW5AYW9sLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMTNUMDk6NDI6MjYuNzg5WiIsInVwZGF0ZWRBdCI6IjIwMjAtMDctMTNUMDk6NDI6MjYuNzg5WiIsIl9fdiI6MCwiaWF0IjoxNTk0NjMzNTczLCJleHAiOjE1OTQ3MTk5NzN9.veMowOMdhc2crbFBXe11yTZuw-oFSHSNuRJpzfB8smo; Max-Age=900; Path=/; Expires=Mon, 13 Jul 2020 10:01:13 GMT; HttpOnly"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "614"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"266-B/Bym3QxnI2THTdF3UWu48Y2LVE\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 09:46:13 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/GetaSupport-Notfound"
+            },
+            "examples": {
+              "application/json": {
+                "status": 401,
+                "error": "Invalid email address or password."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "This lets an admin create a user account: 'customer', 'agent', 'admin'. The following fields are required: `firstName, lastName, email, password`, `role` is optional and could be one of `user, agent, admin` for 'customer', 'agent', 'admin' respectively.\n\n\n\n",
+        "summary": "Create a User",
+        "tags": [
+          "User"
+        ],
+        "operationId": "CreateaUser",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateaUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateaUser-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 201,
+                "data": {
+                  "role": "agent",
+                  "_id": "5f0c30cfbae3ffe6c2f829a1",
+                  "lastName": "Ken",
+                  "firstName": "Ken",
+                  "email": "Ken3@aol.com",
+                  "createdAt": "2020-07-13T10:00:47.311Z",
+                  "updatedAt": "2020-07-13T10:00:47.311Z",
+                  "__v": 0
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "215"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"d7-vgOvaNHbtV27pI3siEU6cP3rPGw\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 10:00:47 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/GetaSupport-Notfound"
+            },
+            "examples": {
+              "application/json": {
+                "status": 403,
+                "error": "You are not permitted to access this resource."
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "This lets an admin/agent get the list of users on the platform.",
+        "summary": "Get All Users",
+        "tags": [
+          "User"
+        ],
+        "operationId": "GetAllUsers",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetAllUsers"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 200,
+                "data": [
+                  {
+                    "role": "user",
+                    "_id": "5f0c2c82bae3ffe6c2f8299f",
+                    "lastName": "Ken",
+                    "firstName": "Ken",
+                    "email": "Ken@aol.com",
+                    "createdAt": "2020-07-13T09:42:26.789Z",
+                    "updatedAt": "2020-07-13T09:42:26.789Z",
+                    "__v": 0
+                  },
+                  {
+                    "role": "admin",
+                    "_id": "5f0c2e036db114aeb46d77b9",
+                    "lastName": "Ken",
+                    "firstName": "Ken",
+                    "email": "Ken2@aol.com",
+                    "createdAt": "2020-07-13T09:42:26.789Z",
+                    "updatedAt": "2020-07-13T09:42:26.789Z",
+                    "__v": 0
+                  },
+                  {
+                    "role": "agent",
+                    "_id": "5f0c30cfbae3ffe6c2f829a1",
+                    "lastName": "Ken",
+                    "firstName": "Ken",
+                    "email": "Ken3@aol.com",
+                    "createdAt": "2020-07-13T10:00:47.311Z",
+                    "updatedAt": "2020-07-13T10:00:47.311Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "603"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"25b-+6iWJCLgWmAey4ldWGTMJAXNvXw\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 10:10:00 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "description": "This lets an admin/agent get a given user on the platform using the user ID.",
+        "summary": "Get One User",
+        "tags": [
+          "User"
+        ],
+        "operationId": "GetOneUser",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetOneUser-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 200,
+                "data": {
+                  "role": "user",
+                  "_id": "5f0c2c82bae3ffe6c2f8299f",
+                  "lastName": "Ken",
+                  "firstName": "Ken",
+                  "email": "Ken@aol.com",
+                  "createdAt": "2020-07-13T09:42:26.789Z",
+                  "updatedAt": "2020-07-13T09:42:26.789Z",
+                  "__v": 0
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "213"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"d5-gKrOTfONk6d3ngwBEnopAzcpG4Y\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 10:11:18 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/GetaSupport-Notfound"
+            },
+            "examples": {
+              "application/json": {
+                "status": 404,
+                "error": "User not found"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "This lets an admin delete a given user on the platform using the user ID.",
+        "summary": "Delete a User",
+        "tags": [
+          "User"
+        ],
+        "operationId": "DeleteaUser",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DeleteaUser-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 200,
+                "message": "User deleted successfully."
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "53"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"35-FgAxmkhMj8NvX84mnwtdTnzvg0Y\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 10:12:36 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/supports": {
+      "post": {
+        "description": "This lets a user create a support requests. The following fields are required: subject, message.",
+        "summary": "Create a Support",
+        "tags": [
+          "Support"
+        ],
+        "operationId": "CreateaSupport",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateaSupportRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateaSupport-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 201,
+                "data": {
+                  "status": "open",
+                  "_id": "5f0c2e25bae3ffe6c2f829a0",
+                  "subject": "Can't access my account",
+                  "message": "getting invalid login credentials",
+                  "user": "5f0c2c82bae3ffe6c2f8299f",
+                  "comments": [],
+                  "createdAt": "2020-07-13T09:49:25.129Z",
+                  "updatedAt": "2020-07-13T09:49:25.129Z",
+                  "__v": 0
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "288"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"120-4C5sfu6N3cn99ypDCGqTS1xu/ic\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 09:49:25 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "This lets a user get the list of support requests, for an admin/agent it returns all support requests but returns support requests created by a customer for a customer.",
+        "summary": "Get All Supports",
+        "tags": [
+          "Support"
+        ],
+        "operationId": "GetAllSupports",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetAllSupports-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 200,
+                "data": [
+                  {
+                    "status": "open",
+                    "_id": "5f0c2e25bae3ffe6c2f829a0",
+                    "subject": "Can't access my account",
+                    "message": "getting invalid login credentials",
+                    "user": "5f0c2c82bae3ffe6c2f8299f",
+                    "comments": [],
+                    "createdAt": "2020-07-13T09:49:25.129Z",
+                    "updatedAt": "2020-07-13T09:49:25.129Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "290"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"122-1iQSwF/kCFcWFpdcDvUU7BxMiMk\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 10:13:13 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/supports/{id}": {
+      "get": {
+        "description": "This lets an user get a given support request on the platform using the ID. A customer can only view a request created by him/her.",
+        "summary": "Get a Support",
+        "tags": [
+          "Support"
+        ],
+        "operationId": "GetaSupport",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GetaSupport-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 200,
+                "data": {
+                  "status": "processing",
+                  "_id": "5f0c2e25bae3ffe6c2f829a0",
+                  "subject": "Can't access my account",
+                  "message": "getting invalid login credentials",
+                  "user": "5f0c2c82bae3ffe6c2f8299f",
+                  "comments": [
+                    {
+                      "createdAt": "2020-07-13T10:14:02.765Z",
+                      "_id": "5f0c33eabae3ffe6c2f829a2",
+                      "message": "are you for real?",
+                      "user": "5f0c2e036db114aeb46d77b9"
+                    }
+                  ],
+                  "createdAt": "2020-07-13T09:49:25.129Z",
+                  "updatedAt": "2020-07-13T10:14:02.771Z",
+                  "__v": 1
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "431"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"1af-F65hQVbFcdXdxgAZMsrrfHRKqEM\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 10:14:38 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/GetaSupport-Notfound"
+            },
+            "examples": {
+              "application/json": {
+                "status": 404,
+                "error": "Support item not found"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "This lets a user comment on a given support request. A customer can only comment when an admin/agent has comment and the status is not closed.",
+        "summary": "Comment on a Support",
+        "tags": [
+          "Support"
+        ],
+        "operationId": "CommentonaSupport",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CommentonaSupportRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CommentonaSupport-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 200,
+                "data": {
+                  "status": "processing",
+                  "_id": "5f0c2e25bae3ffe6c2f829a0",
+                  "subject": "Can't access my account",
+                  "message": "getting invalid login credentials",
+                  "user": "5f0c2c82bae3ffe6c2f8299f",
+                  "comments": [
+                    {
+                      "_id": "5f0c33eabae3ffe6c2f829a2",
+                      "message": "are you for real?",
+                      "user": "5f0c2e036db114aeb46d77b9",
+                      "createdAt": "2020-07-13T10:14:02.765Z"
+                    }
+                  ],
+                  "createdAt": "2020-07-13T09:49:25.129Z",
+                  "updatedAt": "2020-07-13T10:14:02.771Z",
+                  "__v": 1
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "431"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"1af-LCD75qVBd6aohP5CgUocIPA6ET8\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 10:14:02 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "This lets an admin/agent mark a given support request as closed.",
+        "summary": "Close a Support",
+        "tags": [
+          "Support"
+        ],
+        "operationId": "CloseaSupport",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CloseaSupport-Successful"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "status": 200,
+                "data": {
+                  "status": "closed",
+                  "_id": "5f0c2e25bae3ffe6c2f829a0",
+                  "subject": "Can't access my account",
+                  "message": "getting invalid login credentials",
+                  "user": "5f0c2c82bae3ffe6c2f8299f",
+                  "comments": [
+                    {
+                      "createdAt": "2020-07-13T10:14:02.765Z",
+                      "_id": "5f0c33eabae3ffe6c2f829a2",
+                      "message": "are you for real?",
+                      "user": "5f0c2e036db114aeb46d77b9"
+                    }
+                  ],
+                  "createdAt": "2020-07-13T09:49:25.129Z",
+                  "updatedAt": "2020-07-13T10:16:05.075Z",
+                  "__v": 1,
+                  "closedBy": "5f0c2e036db114aeb46d77b9",
+                  "closedAt": "2020-07-13T10:16:05.074Z"
+                }
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "503"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"1f7-o5OKBq2Nhd9Z8oQvwyeNmpaCPOI\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Mon, 13 Jul 2020 10:16:05 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "This lets an admin delete a given supports on the platform using the ID.",
+        "summary": "Delete a Support",
+        "tags": [
+          "Support"
+        ],
+        "operationId": "DeleteaSupport",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/supports/export": {
+      "get": {
+        "description": "This lets an admin/agent export support requests. Without providing any parameters, the closed requests of the past one month is exported as `csv`.\nThe following parameters can be passed in `query`:\n - `type` - can be csv or pdf, csv is default.\n - `status` - can be open or closed. closed default\n - `start` - date in the form `DD-MM-YYYY`, default is a month ago.\n - `end` - date in the form `DD-MM-YYYY`, default is a current date.",
+        "summary": "Export Supports",
+        "tags": [
+          "Support"
+        ],
+        "operationId": "ExportSupports",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SignupRequest": {
+      "title": "SignupRequest",
+      "example": {
+        "firstName": "Ken",
+        "lastName": "Ken",
+        "email": "Ken@aol.com",
+        "password": "seCret1@3"
+      },
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "password"
+      ]
+    },
+    "Signup-Validationerror": {
+      "title": "Signup-Validationerror",
+      "example": {
+        "status": 409,
+        "error": "Validation errors.",
+        "fields": {
+          "email": "Email already exists."
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "error": {
+          "type": "string"
+        },
+        "fields": {
+          "$ref": "#/definitions/Fields"
+        }
+      },
+      "required": [
+        "status",
+        "error",
+        "fields"
+      ]
+    },
+    "Fields": {
+      "title": "Fields",
+      "example": {
+        "email": "Email already exists."
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ]
+    },
+    "Signup-Successful": {
+      "title": "Signup-Successful",
+      "example": {
+        "status": 201,
+        "data": {
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsIl9pZCI6IjVmMGMyYzgyYmFlM2ZmZTZjMmY4Mjk5ZiIsImxhc3ROYW1lIjoiS2VuIiwiZmlyc3ROYW1lIjoiS2VuIiwiZW1haWwiOiJLZW5AYW9sLmNvbSIsImlhdCI6MTU5NDYzMzM0NiwiZXhwIjoxNTk0NzE5NzQ2fQ.C37f0Utb-mkYLCfFllYDShUm_58sYMEoWOVszYWTxj8",
+          "user": {
+            "role": "user",
+            "_id": "5f0c2c82bae3ffe6c2f8299f",
+            "lastName": "Ken",
+            "firstName": "Ken",
+            "email": "Ken@aol.com"
+          }
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/Data"
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "Data": {
+      "title": "Data",
+      "example": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsIl9pZCI6IjVmMGMyYzgyYmFlM2ZmZTZjMmY4Mjk5ZiIsImxhc3ROYW1lIjoiS2VuIiwiZmlyc3ROYW1lIjoiS2VuIiwiZW1haWwiOiJLZW5AYW9sLmNvbSIsImlhdCI6MTU5NDYzMzM0NiwiZXhwIjoxNTk0NzE5NzQ2fQ.C37f0Utb-mkYLCfFllYDShUm_58sYMEoWOVszYWTxj8",
+        "user": {
+          "role": "user",
+          "_id": "5f0c2c82bae3ffe6c2f8299f",
+          "lastName": "Ken",
+          "firstName": "Ken",
+          "email": "Ken@aol.com"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "required": [
+        "token",
+        "user"
+      ]
+    },
+    "User": {
+      "title": "User",
+      "example": {
+        "role": "user",
+        "_id": "5f0c2c82bae3ffe6c2f8299f",
+        "lastName": "Ken",
+        "firstName": "Ken",
+        "email": "Ken@aol.com"
+      },
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "_id",
+        "lastName",
+        "firstName",
+        "email"
+      ]
+    },
+    "LoginRequest": {
+      "title": "LoginRequest",
+      "example": {
+        "email": "Ken@aol.com",
+        "password": "seCret1@3"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "Login-Successful": {
+      "title": "Login-Successful",
+      "example": {
+        "status": 200,
+        "data": {
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsIl9pZCI6IjVmMGMyYzgyYmFlM2ZmZTZjMmY4Mjk5ZiIsImxhc3ROYW1lIjoiS2VuIiwiZmlyc3ROYW1lIjoiS2VuIiwiZW1haWwiOiJLZW5AYW9sLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMTNUMDk6NDI6MjYuNzg5WiIsInVwZGF0ZWRBdCI6IjIwMjAtMDctMTNUMDk6NDI6MjYuNzg5WiIsIl9fdiI6MCwiaWF0IjoxNTk0NjMzNTczLCJleHAiOjE1OTQ3MTk5NzN9.veMowOMdhc2crbFBXe11yTZuw-oFSHSNuRJpzfB8smo",
+          "user": {
+            "role": "user",
+            "_id": "5f0c2c82bae3ffe6c2f8299f",
+            "lastName": "Ken",
+            "firstName": "Ken",
+            "email": "Ken@aol.com",
+            "createdAt": "2020-07-13T09:42:26.789Z",
+            "updatedAt": "2020-07-13T09:42:26.789Z",
+            "__v": 0
+          }
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/Data1"
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "Data1": {
+      "title": "Data1",
+      "example": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciIsIl9pZCI6IjVmMGMyYzgyYmFlM2ZmZTZjMmY4Mjk5ZiIsImxhc3ROYW1lIjoiS2VuIiwiZmlyc3ROYW1lIjoiS2VuIiwiZW1haWwiOiJLZW5AYW9sLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjAtMDctMTNUMDk6NDI6MjYuNzg5WiIsInVwZGF0ZWRBdCI6IjIwMjAtMDctMTNUMDk6NDI6MjYuNzg5WiIsIl9fdiI6MCwiaWF0IjoxNTk0NjMzNTczLCJleHAiOjE1OTQ3MTk5NzN9.veMowOMdhc2crbFBXe11yTZuw-oFSHSNuRJpzfB8smo",
+        "user": {
+          "role": "user",
+          "_id": "5f0c2c82bae3ffe6c2f8299f",
+          "lastName": "Ken",
+          "firstName": "Ken",
+          "email": "Ken@aol.com",
+          "createdAt": "2020-07-13T09:42:26.789Z",
+          "updatedAt": "2020-07-13T09:42:26.789Z",
+          "__v": 0
+        }
+      },
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/User1"
+        }
+      },
+      "required": [
+        "token",
+        "user"
+      ]
+    },
+    "User1": {
+      "title": "User1",
+      "example": {
+        "role": "user",
+        "_id": "5f0c2c82bae3ffe6c2f8299f",
+        "lastName": "Ken",
+        "firstName": "Ken",
+        "email": "Ken@aol.com",
+        "createdAt": "2020-07-13T09:42:26.789Z",
+        "updatedAt": "2020-07-13T09:42:26.789Z",
+        "__v": 0
+      },
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "role",
+        "_id",
+        "lastName",
+        "firstName",
+        "email",
+        "createdAt",
+        "updatedAt",
+        "__v"
+      ]
+    },
+    "CreateaUserRequest": {
+      "title": "CreateaUserRequest",
+      "example": {
+        "firstName": "Ken",
+        "lastName": "Ken",
+        "email": "Ken3@aol.com",
+        "password": "seCret1@3",
+        "role": "agent"
+      },
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "password",
+        "role"
+      ]
+    },
+    "CreateaUser-Successful": {
+      "title": "CreateaUser-Successful",
+      "example": {
+        "status": 201,
+        "data": {
+          "role": "agent",
+          "_id": "5f0c30cfbae3ffe6c2f829a1",
+          "lastName": "Ken",
+          "firstName": "Ken",
+          "email": "Ken3@aol.com",
+          "createdAt": "2020-07-13T10:00:47.311Z",
+          "updatedAt": "2020-07-13T10:00:47.311Z",
+          "__v": 0
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/Data2"
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "Data2": {
+      "title": "Data2",
+      "example": {
+        "role": "agent",
+        "_id": "5f0c30cfbae3ffe6c2f829a1",
+        "lastName": "Ken",
+        "firstName": "Ken",
+        "email": "Ken3@aol.com",
+        "createdAt": "2020-07-13T10:00:47.311Z",
+        "updatedAt": "2020-07-13T10:00:47.311Z",
+        "__v": 0
+      },
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "role",
+        "_id",
+        "lastName",
+        "firstName",
+        "email",
+        "createdAt",
+        "updatedAt",
+        "__v"
+      ]
+    },
+    "GetAllUsers": {
+      "title": "GetAllUsers",
+      "example": {
+        "status": 200,
+        "data": [
+          {
+            "role": "user",
+            "_id": "5f0c2c82bae3ffe6c2f8299f",
+            "lastName": "Ken",
+            "firstName": "Ken",
+            "email": "Ken@aol.com",
+            "createdAt": "2020-07-13T09:42:26.789Z",
+            "updatedAt": "2020-07-13T09:42:26.789Z",
+            "__v": 0
+          },
+          {
+            "role": "admin",
+            "_id": "5f0c2e036db114aeb46d77b9",
+            "lastName": "Ken",
+            "firstName": "Ken",
+            "email": "Ken2@aol.com",
+            "createdAt": "2020-07-13T09:42:26.789Z",
+            "updatedAt": "2020-07-13T09:42:26.789Z",
+            "__v": 0
+          },
+          {
+            "role": "agent",
+            "_id": "5f0c30cfbae3ffe6c2f829a1",
+            "lastName": "Ken",
+            "firstName": "Ken",
+            "email": "Ken3@aol.com",
+            "createdAt": "2020-07-13T10:00:47.311Z",
+            "updatedAt": "2020-07-13T10:00:47.311Z",
+            "__v": 0
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Data2"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "GetOneUser-Successful": {
+      "title": "GetOneUser-Successful",
+      "example": {
+        "status": 200,
+        "data": {
+          "role": "user",
+          "_id": "5f0c2c82bae3ffe6c2f8299f",
+          "lastName": "Ken",
+          "firstName": "Ken",
+          "email": "Ken@aol.com",
+          "createdAt": "2020-07-13T09:42:26.789Z",
+          "updatedAt": "2020-07-13T09:42:26.789Z",
+          "__v": 0
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/Data2"
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "DeleteaUser-Successful": {
+      "title": "DeleteaUser-Successful",
+      "example": {
+        "status": 200,
+        "message": "User deleted successfully."
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "message"
+      ]
+    },
+    "CreateaSupportRequest": {
+      "title": "CreateaSupportRequest",
+      "example": {
+        "subject": "Can't access my account",
+        "message": "getting invalid login credentials"
+      },
+      "type": "object",
+      "properties": {
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject",
+        "message"
+      ]
+    },
+    "CreateaSupport-Successful": {
+      "title": "CreateaSupport-Successful",
+      "example": {
+        "status": 201,
+        "data": {
+          "status": "open",
+          "_id": "5f0c2e25bae3ffe6c2f829a0",
+          "subject": "Can't access my account",
+          "message": "getting invalid login credentials",
+          "user": "5f0c2c82bae3ffe6c2f8299f",
+          "comments": [],
+          "createdAt": "2020-07-13T09:49:25.129Z",
+          "updatedAt": "2020-07-13T09:49:25.129Z",
+          "__v": 0
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/Data5"
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "Data5": {
+      "title": "Data5",
+      "example": {
+        "status": "open",
+        "_id": "5f0c2e25bae3ffe6c2f829a0",
+        "subject": "Can't access my account",
+        "message": "getting invalid login credentials",
+        "user": "5f0c2c82bae3ffe6c2f8299f",
+        "comments": [],
+        "createdAt": "2020-07-13T09:49:25.129Z",
+        "updatedAt": "2020-07-13T09:49:25.129Z",
+        "__v": 0
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "status",
+        "_id",
+        "subject",
+        "message",
+        "user",
+        "comments",
+        "createdAt",
+        "updatedAt",
+        "__v"
+      ]
+    },
+    "GetAllSupports-Successful": {
+      "title": "GetAllSupports-Successful",
+      "example": {
+        "status": 200,
+        "data": [
+          {
+            "status": "open",
+            "_id": "5f0c2e25bae3ffe6c2f829a0",
+            "subject": "Can't access my account",
+            "message": "getting invalid login credentials",
+            "user": "5f0c2c82bae3ffe6c2f8299f",
+            "comments": [],
+            "createdAt": "2020-07-13T09:49:25.129Z",
+            "updatedAt": "2020-07-13T09:49:25.129Z",
+            "__v": 0
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Data5"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "GetaSupport-Successful": {
+      "title": "GetaSupport-Successful",
+      "example": {
+        "status": 200,
+        "data": {
+          "status": "processing",
+          "_id": "5f0c2e25bae3ffe6c2f829a0",
+          "subject": "Can't access my account",
+          "message": "getting invalid login credentials",
+          "user": "5f0c2c82bae3ffe6c2f8299f",
+          "comments": [
+            {
+              "createdAt": "2020-07-13T10:14:02.765Z",
+              "_id": "5f0c33eabae3ffe6c2f829a2",
+              "message": "are you for real?",
+              "user": "5f0c2e036db114aeb46d77b9"
+            }
+          ],
+          "createdAt": "2020-07-13T09:49:25.129Z",
+          "updatedAt": "2020-07-13T10:14:02.771Z",
+          "__v": 1
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/Data7"
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "Data7": {
+      "title": "Data7",
+      "example": {
+        "status": "processing",
+        "_id": "5f0c2e25bae3ffe6c2f829a0",
+        "subject": "Can't access my account",
+        "message": "getting invalid login credentials",
+        "user": "5f0c2c82bae3ffe6c2f8299f",
+        "comments": [
+          {
+            "createdAt": "2020-07-13T10:14:02.765Z",
+            "_id": "5f0c33eabae3ffe6c2f829a2",
+            "message": "are you for real?",
+            "user": "5f0c2e036db114aeb46d77b9"
+          }
+        ],
+        "createdAt": "2020-07-13T09:49:25.129Z",
+        "updatedAt": "2020-07-13T10:14:02.771Z",
+        "__v": 1
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "status",
+        "_id",
+        "subject",
+        "message",
+        "user",
+        "comments",
+        "createdAt",
+        "updatedAt",
+        "__v"
+      ]
+    },
+    "Comment": {
+      "title": "Comment",
+      "example": {
+        "createdAt": "2020-07-13T10:14:02.765Z",
+        "_id": "5f0c33eabae3ffe6c2f829a2",
+        "message": "are you for real?",
+        "user": "5f0c2e036db114aeb46d77b9"
+      },
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "createdAt",
+        "_id",
+        "message",
+        "user"
+      ]
+    },
+    "GetaSupport-Notfound": {
+      "title": "GetaSupport-Notfound",
+      "example": {
+        "status": 404,
+        "error": "Support item not found"
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "error": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "error"
+      ]
+    },
+    "CommentonaSupportRequest": {
+      "title": "CommentonaSupportRequest",
+      "example": {
+        "message": "are you for real?"
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message"
+      ]
+    },
+    "CommentonaSupport-Successful": {
+      "title": "CommentonaSupport-Successful",
+      "example": {
+        "status": 200,
+        "data": {
+          "status": "processing",
+          "_id": "5f0c2e25bae3ffe6c2f829a0",
+          "subject": "Can't access my account",
+          "message": "getting invalid login credentials",
+          "user": "5f0c2c82bae3ffe6c2f8299f",
+          "comments": [
+            {
+              "_id": "5f0c33eabae3ffe6c2f829a2",
+              "message": "are you for real?",
+              "user": "5f0c2e036db114aeb46d77b9",
+              "createdAt": "2020-07-13T10:14:02.765Z"
+            }
+          ],
+          "createdAt": "2020-07-13T09:49:25.129Z",
+          "updatedAt": "2020-07-13T10:14:02.771Z",
+          "__v": 1
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/Data7"
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "CloseaSupport-Successful": {
+      "title": "CloseaSupport-Successful",
+      "example": {
+        "status": 200,
+        "data": {
+          "status": "closed",
+          "_id": "5f0c2e25bae3ffe6c2f829a0",
+          "subject": "Can't access my account",
+          "message": "getting invalid login credentials",
+          "user": "5f0c2c82bae3ffe6c2f8299f",
+          "comments": [
+            {
+              "createdAt": "2020-07-13T10:14:02.765Z",
+              "_id": "5f0c33eabae3ffe6c2f829a2",
+              "message": "are you for real?",
+              "user": "5f0c2e036db114aeb46d77b9"
+            }
+          ],
+          "createdAt": "2020-07-13T09:49:25.129Z",
+          "updatedAt": "2020-07-13T10:16:05.075Z",
+          "__v": 1,
+          "closedBy": "5f0c2e036db114aeb46d77b9",
+          "closedAt": "2020-07-13T10:16:05.074Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "data": {
+          "$ref": "#/definitions/Data9"
+        }
+      },
+      "required": [
+        "status",
+        "data"
+      ]
+    },
+    "Data9": {
+      "title": "Data9",
+      "example": {
+        "status": "closed",
+        "_id": "5f0c2e25bae3ffe6c2f829a0",
+        "subject": "Can't access my account",
+        "message": "getting invalid login credentials",
+        "user": "5f0c2c82bae3ffe6c2f8299f",
+        "comments": [
+          {
+            "createdAt": "2020-07-13T10:14:02.765Z",
+            "_id": "5f0c33eabae3ffe6c2f829a2",
+            "message": "are you for real?",
+            "user": "5f0c2e036db114aeb46d77b9"
+          }
+        ],
+        "createdAt": "2020-07-13T09:49:25.129Z",
+        "updatedAt": "2020-07-13T10:16:05.075Z",
+        "__v": 1,
+        "closedBy": "5f0c2e036db114aeb46d77b9",
+        "closedAt": "2020-07-13T10:16:05.074Z"
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "__v": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "closedBy": {
+          "type": "string"
+        },
+        "closedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "_id",
+        "subject",
+        "message",
+        "user",
+        "comments",
+        "createdAt",
+        "updatedAt",
+        "__v",
+        "closedBy",
+        "closedAt"
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "User"
+    },
+    {
+      "name": "Support"
+    }
+  ]
+}

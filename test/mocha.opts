@@ -1,0 +1,6 @@
+--recursive
+
+#--exclude **/Auth.js
+#--exclude **/Answer.js
+#--exclude **/Question.js
+#--exclude **/Vote.js
